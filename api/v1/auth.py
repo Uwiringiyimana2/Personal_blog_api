@@ -2,6 +2,7 @@
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from models.db import DB
 import bcrypt
+import jwt
 
 
 db = DB()
@@ -23,3 +24,6 @@ def verify_password(email, password):
     except Exception as e:
         print(f"Error verifying password: {e}")
     return None
+
+
+
