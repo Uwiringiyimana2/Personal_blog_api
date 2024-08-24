@@ -40,14 +40,31 @@ def home_blog(id):
 @token_required
 def get_user_blog(current_user):
     """Get all published blogs by the user"""
-    return ""
+    try:
+        blogs = db.all_user_blog(current_user.id)
+        if blogs:
+            return jsonify(blogs)
+        else:
+            return jsonify([])
+    except Exception:
+        print(f"Error fetching blogs: {e}")
+        abort(404)
 
 
 @app_views.route("/blog/<int:id>", methods=['GET'], strict_slashes=False)
 @token_required
 def get_user_blog_by_id(current_user, id):
     """Get all published blog by ID by the user"""
-    return ""
+    if current_user is None:
+        return jsonify({"message": "Need to login first!"})
+    try:
+        blog = db.get(Blog, id)
+        if blog:
+            return jsonify(blog)
+        else:
+            abort(404)
+    except Exception as e:
+        abort(404)
 
 
 @app_views.route("/blog", methods=['POST'], strict_slashes=False)
@@ -75,6 +92,10 @@ def create_blog(current_user):
 def update_blog(current_user, id):
     """ PUT /api/v1/blog/:id
     """
+    title = request.form.get("title")
+    content = request.form.get("content")
+    try:
+        blog = 
     return ""
 
 
